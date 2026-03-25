@@ -14,6 +14,7 @@ foreach($etudiants as $etudiant)
     echo  "<li> " .$etudiant->nom. " et " .$etudiant->prenom."</li>";
 
 
+
 $res = $dbPDO->prepare("SELECT nom_classe FROM classes"); 
 $res->execute();
 
@@ -23,6 +24,21 @@ echo "<br>Liste de toutes les classes:<ul>";
 
 foreach($classes as $classe) {
     echo "<li>" . $classe->nom_classe . "</li>";
+}
+
+
+echo "</ul>";
+
+
+$res = $dbPDO->prepare("SELECT nom , prenom FROM prof"); 
+$res->execute();
+
+$profs = $res->fetchAll(PDO::FETCH_OBJ); 
+
+echo "<br>Liste de toutes les profs :<ul>";
+
+foreach($profs as $prof) {
+    echo "<li>" . $prof->nom . " " . $prof->prenom . "</li>";
 }
 
 
