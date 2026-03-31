@@ -49,11 +49,11 @@ $resultat = $dbPDO->prepare("
     SELECT 
         p.nom AS nom_prof,
         p.prenom AS prenom_prof,
-        m.libelle AS nom_matiere,
+        m.nom_matiere AS nom_matiere,
         c.nom_classe AS nom_classe
     FROM prof p
-    INNER JOIN matiere m ON p.id_matiere = m.id
-    INNER JOIN classes c ON p.id_classe = c.id
+    INNER JOIN matiere m ON p.id_prof = m.id_prof
+    INNER JOIN classes c ON p.id_classe = c.id_classe
 ");
 $resultat->execute();
 
@@ -71,7 +71,17 @@ foreach($profs_infos as $prof) {
 
 echo "</ul>";
 
+// PARTIE 3 
 
+$resultat = $dbPDO->prepare("INSERT INTO matiere(nom_matiere, id_prof) VALUES (:nom_matiere, :id_prof)");
+$resultat->execute([
+    'nom_matiere' => "Sport",
+    'id_prof' => 1
+]);
+
+echo "Matiere ajoutee";
 ?>
+
+
 
 
