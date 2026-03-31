@@ -73,13 +73,42 @@ echo "</ul>";
 
 // PARTIE 3 
 
-$resultat = $dbPDO->prepare("INSERT INTO matiere(nom_matiere, id_prof) VALUES (:nom_matiere, :id_prof)");
+/* $resultat = $dbPDO->prepare("INSERT INTO matiere(nom_matiere, id_prof) VALUES (:nom_matiere, :id_prof)");
 $resultat->execute([
     'nom_matiere' => "Sport",
     'id_prof' => 1
 ]);
 
-echo "Matiere ajoutee";
+echo "Matiere ajoutee"; */
+
+$res = $dbPDO->prepare("SELECT id_prof, nom, prenom FROM prof");
+$res->execute();
+
+$liste_profs = $res->fetchAll(PDO::FETCH_OBJ);
+
+// Formulaire
+
+echo "<br>Ajouter une matiere :";
+
+echo "<form action='Views/nouvelle_matiere.php' method='post'>
+
+    <label for='nom_matiere'>Libelle :</label>
+    <input name='nom_matiere' id='nom_matiere' type='text'>
+
+    <label for='id_prof'>Prof :</label>
+    <select name='id_prof' id='id_prof'>";
+    
+foreach($liste_profs as $prof) {
+    echo "<option value='" . $prof->id_prof . "'>"
+        . $prof->nom . " " . $prof->prenom .
+        "</option>";
+}
+
+echo "</select>
+
+    <button type='submit'>Valider</button>
+
+</form>";
 ?>
 
 
