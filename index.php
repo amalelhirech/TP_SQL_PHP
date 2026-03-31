@@ -109,6 +109,34 @@ echo "</select>
     <button type='submit'>Valider</button>
 
 </form>";
+
+$res = $dbPDO->prepare("SELECT id_classe, nom_classe FROM classes");
+$res->execute();
+
+$classes_formulaire = $res->fetchAll(PDO::FETCH_OBJ);
+
+echo "<br>Ajouter un etudiant :";
+
+echo "<form action='Views/nouvel_etudiant.php' method='post'>
+
+    <label for='nom'>Nom :</label>
+    <input name='nom' id='nom' type='text'>
+
+    <label for='prenom'>Prenom :</label>
+    <input name='prenom' id='prenom' type='text'>
+
+    <label for='id_classe'>Classe :</label>
+    <select name='id_classe' id='id_classe'>";
+
+foreach($classes_formulaire as $classe) {
+    echo "<option value='" . $classe->id_classe . "'>" . $classe->nom_classe . "</option>";
+}
+
+echo "</select>
+
+    <button type='submit'>Valider</button>
+
+</form>";
 ?>
 
 
