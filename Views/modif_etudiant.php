@@ -1,13 +1,13 @@
 <?php
 require_once "../Model/pdo.php";
 
+
 if(!isset($_GET['id'])) {
     echo "Aucun id recu";
     exit();
 }
 
 $id = $_GET['id'];
-
 
 if(
     isset($_POST['nom']) && !empty($_POST['nom']) &&
@@ -39,7 +39,6 @@ $resultat = $dbPDO->prepare("
     FROM etudiant
     WHERE id_etudiant = :id
 ");
-
 $resultat->execute([
     'id' => $id
 ]);
@@ -51,7 +50,6 @@ if(!$etudiant) {
     exit();
 }
 
-
 $resultat = $dbPDO->prepare("
     SELECT id_classe, nom_classe
     FROM classes
@@ -59,7 +57,6 @@ $resultat = $dbPDO->prepare("
 $resultat->execute();
 
 $classes = $resultat->fetchAll(PDO::FETCH_OBJ);
-
 
 echo "<form action='modif_etudiant.php?id=" . $etudiant->id_etudiant . "' method='post'>
 

@@ -3,16 +3,19 @@ require_once "Model/pdo.php";
 
 
 
-$resultat = $dbPDO->prepare("SELECT nom, prenom FROM etudiant"); 
+$resultat = $dbPDO->prepare("SELECT id_etudiant, nom, prenom FROM etudiant");
 $resultat->execute();
 
-$etudiants = $resultat->fetchAll(PDO::FETCH_CLASS);
+$etudiants = $resultat->fetchAll(PDO::FETCH_OBJ);
 
 echo "<br> Liste des etudiants : ";
 
-foreach($etudiants as $etudiant)
-    echo  "<li> " .$etudiant->nom. " et " .$etudiant->prenom."</li>";
-
+foreach($etudiants as $etudiant) {
+    echo "<li>" 
+        . $etudiant->nom . " " . $etudiant->prenom
+        . " <a href='Views/modif_etudiant.php?id=" . $etudiant->id_etudiant . "'>Modifier</a>"
+        . "</li>";
+}
 
 
 $res = $dbPDO->prepare("SELECT nom_classe FROM classes"); 
